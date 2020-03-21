@@ -1,8 +1,8 @@
-let db = require(`../db/db.jason`);
+let db = require(`../db/db.json`);
 
 module.exports = function (app) {
     app.get("/api/notes", function (req, res) {
-        res.jason(db)
+        res.json(db)
     })
     app.post("/api/notes", function (req, res) {
         var newNote = req.body;
@@ -11,5 +11,15 @@ module.exports = function (app) {
         db.push(newNote);
         res.sendStatus(200)
     })
+app.delete("/api/notes/:id", function (req, res){
+    var position;
+    for (var i=0; i<db.length; i++){
+        if (db[i].id === req.params.id){
+            position = i        }
+    }
+db.splice(position,1)
+res.sendStatus(200)
+
+});
 
 }
